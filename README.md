@@ -23,3 +23,7 @@
 
 3. Crear controlador de Player, el cual posea los métodos show (retorna detalle de jugador) y save (registra nuevo jugador) ambos métodos deben contemplar manejos de errores.
 4. Definir archivo de rutas para ambos métodos.
+
+## Respuestas
+
+Laravel Api Token: Siguiendo la estructura que plantea Laravel, es preferible guardar el registro de token de una api en el archivo de variables de entorno .env
