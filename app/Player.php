@@ -2,10 +2,13 @@
 
 namespace App;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
 
 class Player extends Model
 {
+    const BASE_PATH_DATA  = 'constants/';
+
     /**
      * Validation rules
      *
@@ -70,5 +73,28 @@ class Player extends Model
         }
 
         return $query->get();
+    }
+
+    /**
+     * Get or create file of data players.
+     *
+     * @return array|mixed
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
+    public static function getAll()
+    {
+        $players = Storage::disk('local')->exists(static::BASE_PATH_DATA . 'data.json') ? json_decode(Storage::disk('local')->get('constants/data.json')) : [];
+
+        return $players;
+    }
+
+    /**
+     * Save all data players
+     *
+     * @return bool
+     */
+    public static function saveAll($data)
+    {
+        return Storage::disk('local')->put(static::BASE_PATH_DATA . 'data.json', json_encode($data));
     }
 }

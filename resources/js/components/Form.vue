@@ -75,13 +75,11 @@
                     .catch(this.fail)
             },
             success (response) {
-                EventBus.$emit('tableReset')
+                EventBus.$emit('filterReset')
                 EventBus.$emit('formToggle')
                 EventBus.$emit('alertAction', 'success')
             },
             fail (error) {
-                console.log(this.errors.getAll('name'));
-                console.log(error);
                 EventBus.$emit('alertAction', 'error')
             },
             resetFields () {

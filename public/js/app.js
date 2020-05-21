@@ -2053,13 +2053,11 @@ __webpack_require__.r(__webpack_exports__);
       this.model.patch(this.apiUrl + '/' + this.model.id).then(this.success)["catch"](this.fail);
     },
     success: function success(response) {
-      EventBus.$emit('tableReset');
+      EventBus.$emit('filterReset');
       EventBus.$emit('formToggle');
       EventBus.$emit('alertAction', 'success');
     },
     fail: function fail(error) {
-      console.log(this.errors.getAll('name'));
-      console.log(error);
       EventBus.$emit('alertAction', 'error');
     },
     resetFields: function resetFields() {
@@ -2239,6 +2237,11 @@ __webpack_require__.r(__webpack_exports__);
         return this.errorSubmitMessage;
       }
     },
+    itemAction: function itemAction(action, data) {
+      if (action == 'edit-item') {
+        EventBus.$emit('formLoad', data);
+      }
+    },
     onEditionEnable: function onEditionEnable() {
       this.isEdit = true;
     },
@@ -2248,20 +2251,26 @@ __webpack_require__.r(__webpack_exports__);
         $('#simpleAlert').modal('toggle');
       }
     },
-    itemAction: function itemAction(action, data) {
-      if (action == 'edit-item') {
-        EventBus.$emit('formLoad', data);
-      }
+    onFilterReset: function onFilterReset() {
+      var _this = this;
+
+      this.moreParams = {};
+      Vue.nextTick(function () {
+        return _this.$refs.vuetable.refresh();
+      });
     }
   },
   created: function created() {
-    var _this = this;
+    var _this2 = this;
 
     EventBus.$on('editionEnable', function (e) {
-      return _this.onEditionEnable();
+      return _this2.onEditionEnable();
+    });
+    EventBus.$on('filterReset', function (e) {
+      return _this2.onFilterReset();
     });
     EventBus.$on('formToggle', function (e) {
-      return _this.formToggle();
+      return _this2.formToggle();
     });
     EventBus.$on('alertAction', this.onAlertAction);
   },
@@ -51077,8 +51086,6 @@ var Form = /*#__PURE__*/function () {
           _this.inProgress = false;
           resolve(response.data);
         })["catch"](function (error) {
-          console.log('debug response');
-          console.log(error.response.data.errors);
           _this.inProgress = false;
 
           _this.errors.record(error.response.data.errors);
@@ -51096,14 +51103,26 @@ var Form = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./resources/sass/app.scss":
+/*!*********************************!*\
+  !*** ./resources/sass/app.scss ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ 0:
-/*!***********************************!*\
-  !*** multi ./resources/js/app.js ***!
-  \***********************************/
+/*!*************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/app.scss ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /var/www/websites/reto-carcool/resources/js/app.js */"./resources/js/app.js");
+__webpack_require__(/*! /var/www/websites/reto-carcool/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /var/www/websites/reto-carcool/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

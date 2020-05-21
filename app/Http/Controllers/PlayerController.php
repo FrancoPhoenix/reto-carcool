@@ -15,13 +15,9 @@ class PlayerController extends Controller
      */
     public function index()
     {
-        $data = [];
+        $players = Player::getAll();
 
-        $data[] = (object) ['name' => 'Ronaldo', 'position' => 'delantero', 'goals' => 5];
-        $data[] = (object) ['name' => 'Zidane', 'position' => 'centro', 'goals' => 2];
-        $data[] = (object) ['name' => 'Messi', 'position' => 'centro', 'goals' => 1];
-
-        return $data;
+        return $players;
     }
 
     /**
@@ -32,7 +28,23 @@ class PlayerController extends Controller
      */
     public function store(SavePlayerRequest $request)
     {
-        return "OK";
+        try {
+            $players = Player::getAll();
+            $inputData = $request->only(['name', 'position', 'goals']);
+            $inputData['created_at'] = date('Y-m-d H:i:s');
+
+            if (!count($players)) {
+                $players = [];
+            }
+
+            $players[] = $inputData;
+
+            Player::saveAll($players);
+
+            return $inputData;
+        } catch(Exception $e) {
+            return ['error' => true, 'message' => $e->getMessage()];
+        }
     }
 
     /**
@@ -44,7 +56,17 @@ class PlayerController extends Controller
      */
     public function update(Request $request, Player $player)
     {
-        return "OK";
+        try {
+            $players = Player::getAll();
+            $inputData = $request->only(['name', 'position', 'goals']);
+            $inputData['updated_at'] = date('Y-m-d H:i:s');
+
+            //TODO: update specific player
+
+            return $inputData;
+        } catch(Exception $e) {
+            return ['error' => true, 'message' => $e->getMessage()];
+        }
     }
 
     /**
@@ -55,6 +77,8 @@ class PlayerController extends Controller
      */
     public function destroy(Player $player)
     {
+        //TODO: delete specific player
+
         return "OK";
     }
 }

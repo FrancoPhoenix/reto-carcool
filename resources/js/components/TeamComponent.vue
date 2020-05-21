@@ -155,6 +155,11 @@
                     return this.errorSubmitMessage
                 }
             },
+            itemAction(action, data) {
+                if (action == 'edit-item') {
+                    EventBus.$emit('formLoad', data)
+                }
+            },
             onEditionEnable () {
                 this.isEdit = true
             },
@@ -165,14 +170,14 @@
                     $('#simpleAlert').modal('toggle')
                 }
             },
-            itemAction(action, data) {
-                if (action == 'edit-item') {
-                    EventBus.$emit('formLoad', data)
-                }
+            onFilterReset () {
+                this.moreParams = {}
+                Vue.nextTick( () => this.$refs.vuetable.refresh())
             }
         },
         created() {
             EventBus.$on('editionEnable', e => this.onEditionEnable())
+            EventBus.$on('filterReset', e => this.onFilterReset())
             EventBus.$on('formToggle', e => this.formToggle())
             EventBus.$on('alertAction', this.onAlertAction)
         },
