@@ -126,8 +126,6 @@
                     EventBus.$emit('formReset')
                 }
 
-                EventBus.$emit('photoReset')
-
                 this.showForm = !this.showForm
             },
             titleGet () {
@@ -161,7 +159,6 @@
                 this.isEdit = true
             },
             onAlertAction (action) {
-                console.log(action);
                 if (action) {
                     this.actionAlert = action
 
@@ -169,11 +166,9 @@
                 }
             },
             itemAction(action, data) {
-                console.log("slot actions: on-click", data.name);
                 if (action == 'edit-item') {
                     EventBus.$emit('formLoad', data)
                 }
-
             }
         },
         created() {

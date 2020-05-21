@@ -3,27 +3,27 @@
         <form method="POST" class="form floating-label" @submit.prevent="model.id? update() : store()" @input="model.errors.clear($event.target.id)">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="form-group" :class="{'has-error': model.errors.has('name')}">
+                    <div class="form-group">
                         <label for="name" class="control-label">Nombre del Jugador</label>
-                        <input type="text" id="name" class="form-control input-lg" :class="{'dirty' : model.name}" v-model="model.name">
-                        <span class="help-block" v-if="model.errors.has('name')" v-text="model.errors.get('name')"></span>
+                        <input type="text" id="name" class="form-control input-lg" :class="{'is-invalid': model.errors.has('name')}" v-model="model.name">
+                        <span class="invalid-feedback" v-if="model.errors.has('name')" v-text="model.errors.get('name')"></span>
                     </div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-6">
-                    <div class="form-group" :class="{'has-error': model.errors.has('position')}">
+                    <div class="form-group">
                         <label for="position" class="control-label">Posición</label>
-                        <input type="text" id="position" class="form-control input-lg" :class="{'dirty' : model.position}" v-model="model.position">
-                        <span class="help-block" v-if="model.errors.has('position')" v-text="model.errors.get('position')"></span>
+                        <input type="text" id="position" class="form-control input-lg" :class="{'is-invalid': model.errors.has('position')}" v-model="model.position">
+                        <span class="invalid-feedback" v-if="model.errors.has('position')" v-text="model.errors.get('position')"></span>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group" :class="{'has-error': model.errors.has('goals')}">
+                    <div class="form-group">
                         <label for="goals" class="control-label">Goles</label>
-                        <input type="text" id="goals" class="form-control input-lg" :class="{'dirty' : model.goals}" v-model="model.goals">
-                        <span class="help-block" v-if="model.errors.has('goals')" v-text="model.errors.get('goals')"></span>
+                        <input type="text" id="goals" class="form-control input-lg" :class="{'is-invalid': model.errors.has('goals')}" v-model="model.goals">
+                        <span class="invalid-feedback" v-if="model.errors.has('goals')" v-text="model.errors.get('goals')"></span>
                     </div>
                 </div>
             </div>
@@ -46,7 +46,6 @@
         data () {
             return {
                 model: new Form({
-                    id: '',
                     name: '',
                     position: '',
                     goals: 0
@@ -55,8 +54,7 @@
             }
         },
         props: {
-            apiUrl: '',
-            errorMessage: ''
+            apiUrl: ''
         },
         created () {
             EventBus.$on('formLoad', this.onFormLoad)
@@ -67,12 +65,12 @@
                 EventBus.$emit('formToggle')
             },
             store () {
-                this.model.post(this.apiUrl + '/crear')
+                this.model.post(this.apiUrl)
                     .then(this.success)
                     .catch(this.fail)
             },
             update () {
-                this.model.patch(this.apiUrl + '/actualizar/' + this.model.id)
+                this.model.patch(this.apiUrl + '/' + this.model.id)
                     .then(this.success)
                     .catch(this.fail)
             },
@@ -82,6 +80,8 @@
                 EventBus.$emit('alertAction', 'success')
             },
             fail (error) {
+                console.log(this.errors.getAll('name'));
+                console.log(error);
                 EventBus.$emit('alertAction', 'error')
             },
             resetFields () {

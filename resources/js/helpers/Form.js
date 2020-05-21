@@ -79,12 +79,6 @@ class Form {
      * Reset the form fields.
      */
     reset () {
-        if (typeof CKEDITOR != 'undefined') {
-            for (let editor in CKEDITOR.instances) {
-                CKEDITOR.instances[editor].setData( '', function() { this.updateElement() })
-            }
-        }
-
         for (let field in this.originalData) {
             this[field] = ''
         }
@@ -154,9 +148,9 @@ class Form {
                 })
                 .catch(error => {
                     this.inProgress = false
-                    this.errors.record(error.response.data)
+                    this.errors.record(error.response.data.errors)
 
-                    reject(error.response.data)
+                    reject(error.response.data.errors)
                 })
         })
     }

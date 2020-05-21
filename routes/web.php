@@ -14,4 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'HomeController@index')->name('index');
-Route::apiResource('players', 'PlayerController');
+Route::apiResource('players', 'PlayerController')->only([
+    'index', 'store', 'update', 'destroy'
+]);

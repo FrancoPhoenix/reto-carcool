@@ -2024,7 +2024,6 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       model: new _helpers_Form__WEBPACK_IMPORTED_MODULE_0__["default"]({
-        id: '',
         name: '',
         position: '',
         goals: 0
@@ -2033,8 +2032,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   props: {
-    apiUrl: '',
-    errorMessage: ''
+    apiUrl: ''
   },
   created: function created() {
     var _this = this;
@@ -2049,10 +2047,10 @@ __webpack_require__.r(__webpack_exports__);
       EventBus.$emit('formToggle');
     },
     store: function store() {
-      this.model.post(this.apiUrl + '/crear').then(this.success)["catch"](this.fail);
+      this.model.post(this.apiUrl).then(this.success)["catch"](this.fail);
     },
     update: function update() {
-      this.model.patch(this.apiUrl + '/actualizar/' + this.model.id).then(this.success)["catch"](this.fail);
+      this.model.patch(this.apiUrl + '/' + this.model.id).then(this.success)["catch"](this.fail);
     },
     success: function success(response) {
       EventBus.$emit('tableReset');
@@ -2060,6 +2058,8 @@ __webpack_require__.r(__webpack_exports__);
       EventBus.$emit('alertAction', 'success');
     },
     fail: function fail(error) {
+      console.log(this.errors.getAll('name'));
+      console.log(error);
       EventBus.$emit('alertAction', 'error');
     },
     resetFields: function resetFields() {
@@ -2214,7 +2214,6 @@ __webpack_require__.r(__webpack_exports__);
         EventBus.$emit('formReset');
       }
 
-      EventBus.$emit('photoReset');
       this.showForm = !this.showForm;
     },
     titleGet: function titleGet() {
@@ -2244,16 +2243,12 @@ __webpack_require__.r(__webpack_exports__);
       this.isEdit = true;
     },
     onAlertAction: function onAlertAction(action) {
-      console.log(action);
-
       if (action) {
         this.actionAlert = action;
         $('#simpleAlert').modal('toggle');
       }
     },
     itemAction: function itemAction(action, data) {
-      console.log("slot actions: on-click", data.name);
-
       if (action == 'edit-item') {
         EventBus.$emit('formLoad', data);
       }
@@ -37913,152 +37908,131 @@ var render = function() {
       [
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-md-12" }, [
-            _c(
-              "div",
-              {
-                staticClass: "form-group",
-                class: { "has-error": _vm.model.errors.has("name") }
-              },
-              [
-                _c(
-                  "label",
-                  { staticClass: "control-label", attrs: { for: "name" } },
-                  [_vm._v("Nombre del Jugador")]
-                ),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.model.name,
-                      expression: "model.name"
-                    }
-                  ],
-                  staticClass: "form-control input-lg",
-                  class: { dirty: _vm.model.name },
-                  attrs: { type: "text", id: "name" },
-                  domProps: { value: _vm.model.name },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.model, "name", $event.target.value)
-                    }
+            _c("div", { staticClass: "form-group" }, [
+              _c(
+                "label",
+                { staticClass: "control-label", attrs: { for: "name" } },
+                [_vm._v("Nombre del Jugador")]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.model.name,
+                    expression: "model.name"
                   }
-                }),
-                _vm._v(" "),
-                _vm.model.errors.has("name")
-                  ? _c("span", {
-                      staticClass: "help-block",
-                      domProps: {
-                        textContent: _vm._s(_vm.model.errors.get("name"))
-                      }
-                    })
-                  : _vm._e()
-              ]
-            )
+                ],
+                staticClass: "form-control input-lg",
+                class: { "is-invalid": _vm.model.errors.has("name") },
+                attrs: { type: "text", id: "name" },
+                domProps: { value: _vm.model.name },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.model, "name", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.model.errors.has("name")
+                ? _c("span", {
+                    staticClass: "invalid-feedback",
+                    domProps: {
+                      textContent: _vm._s(_vm.model.errors.get("name"))
+                    }
+                  })
+                : _vm._e()
+            ])
           ])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-md-6" }, [
-            _c(
-              "div",
-              {
-                staticClass: "form-group",
-                class: { "has-error": _vm.model.errors.has("position") }
-              },
-              [
-                _c(
-                  "label",
-                  { staticClass: "control-label", attrs: { for: "position" } },
-                  [_vm._v("Posición")]
-                ),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.model.position,
-                      expression: "model.position"
-                    }
-                  ],
-                  staticClass: "form-control input-lg",
-                  class: { dirty: _vm.model.position },
-                  attrs: { type: "text", id: "position" },
-                  domProps: { value: _vm.model.position },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.model, "position", $event.target.value)
-                    }
+            _c("div", { staticClass: "form-group" }, [
+              _c(
+                "label",
+                { staticClass: "control-label", attrs: { for: "position" } },
+                [_vm._v("Posición")]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.model.position,
+                    expression: "model.position"
                   }
-                }),
-                _vm._v(" "),
-                _vm.model.errors.has("position")
-                  ? _c("span", {
-                      staticClass: "help-block",
-                      domProps: {
-                        textContent: _vm._s(_vm.model.errors.get("position"))
-                      }
-                    })
-                  : _vm._e()
-              ]
-            )
+                ],
+                staticClass: "form-control input-lg",
+                class: { "is-invalid": _vm.model.errors.has("position") },
+                attrs: { type: "text", id: "position" },
+                domProps: { value: _vm.model.position },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.model, "position", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.model.errors.has("position")
+                ? _c("span", {
+                    staticClass: "invalid-feedback",
+                    domProps: {
+                      textContent: _vm._s(_vm.model.errors.get("position"))
+                    }
+                  })
+                : _vm._e()
+            ])
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-6" }, [
-            _c(
-              "div",
-              {
-                staticClass: "form-group",
-                class: { "has-error": _vm.model.errors.has("goals") }
-              },
-              [
-                _c(
-                  "label",
-                  { staticClass: "control-label", attrs: { for: "goals" } },
-                  [_vm._v("Goles")]
-                ),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.model.goals,
-                      expression: "model.goals"
-                    }
-                  ],
-                  staticClass: "form-control input-lg",
-                  class: { dirty: _vm.model.goals },
-                  attrs: { type: "text", id: "goals" },
-                  domProps: { value: _vm.model.goals },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.model, "goals", $event.target.value)
-                    }
+            _c("div", { staticClass: "form-group" }, [
+              _c(
+                "label",
+                { staticClass: "control-label", attrs: { for: "goals" } },
+                [_vm._v("Goles")]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.model.goals,
+                    expression: "model.goals"
                   }
-                }),
-                _vm._v(" "),
-                _vm.model.errors.has("goals")
-                  ? _c("span", {
-                      staticClass: "help-block",
-                      domProps: {
-                        textContent: _vm._s(_vm.model.errors.get("goals"))
-                      }
-                    })
-                  : _vm._e()
-              ]
-            )
+                ],
+                staticClass: "form-control input-lg",
+                class: { "is-invalid": _vm.model.errors.has("goals") },
+                attrs: { type: "text", id: "goals" },
+                domProps: { value: _vm.model.goals },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.model, "goals", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.model.errors.has("goals")
+                ? _c("span", {
+                    staticClass: "invalid-feedback",
+                    domProps: {
+                      textContent: _vm._s(_vm.model.errors.get("goals"))
+                    }
+                  })
+                : _vm._e()
+            ])
           ])
         ]),
         _vm._v(" "),
@@ -51026,14 +51000,6 @@ var Form = /*#__PURE__*/function () {
   }, {
     key: "reset",
     value: function reset() {
-      if (typeof CKEDITOR != 'undefined') {
-        for (var editor in CKEDITOR.instances) {
-          CKEDITOR.instances[editor].setData('', function () {
-            this.updateElement();
-          });
-        }
-      }
-
       for (var field in this.originalData) {
         this[field] = '';
       }
@@ -51111,11 +51077,13 @@ var Form = /*#__PURE__*/function () {
           _this.inProgress = false;
           resolve(response.data);
         })["catch"](function (error) {
+          console.log('debug response');
+          console.log(error.response.data.errors);
           _this.inProgress = false;
 
-          _this.errors.record(error.response.data);
+          _this.errors.record(error.response.data.errors);
 
-          reject(error.response.data);
+          reject(error.response.data.errors);
         });
       });
     }
@@ -51128,26 +51096,14 @@ var Form = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ "./resources/sass/app.scss":
-/*!*********************************!*\
-  !*** ./resources/sass/app.scss ***!
-  \*********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
 /***/ 0:
-/*!*************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ***!
-  \*************************************************************/
+/*!***********************************!*\
+  !*** multi ./resources/js/app.js ***!
+  \***********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/websites/reto-carcool/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /var/www/websites/reto-carcool/resources/sass/app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! /var/www/websites/reto-carcool/resources/js/app.js */"./resources/js/app.js");
 
 
 /***/ })

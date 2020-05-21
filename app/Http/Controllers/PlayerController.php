@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Player;
 use Illuminate\Http\Request;
+use App\Http\Requests\SavePlayerRequest;
 
 class PlayerController extends Controller
 {
@@ -24,46 +25,14 @@ class PlayerController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SavePlayerRequest $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Player  $player
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Player $player)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Player  $player
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Player $player)
-    {
-        //
+        return "OK";
     }
 
     /**
@@ -75,7 +44,7 @@ class PlayerController extends Controller
      */
     public function update(Request $request, Player $player)
     {
-        //
+        return "OK";
     }
 
     /**
@@ -86,6 +55,6 @@ class PlayerController extends Controller
      */
     public function destroy(Player $player)
     {
-        //
+        return "OK";
     }
 }
