@@ -5,11 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Selección Peruana</div>
-
-                    <div class="card-body">
-                        here
-                    </div>
+                    <team-component api-url="{{ route('players.index') }}"></team-component>
                 </div>
             </div>
         </div>
